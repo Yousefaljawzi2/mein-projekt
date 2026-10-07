@@ -1,0 +1,42 @@
+name: Generate 1M dataset
+
+on:
+  push:
+    paths:
+      - ".github/workflows/generate-1m-data.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Generate 1,000,000 rows
+        run: |
+          mkdir -p data
+          python src/generate_data.py --rows 1000000 --output data/sales_1m.csv
+          wc -l data/sales_1m.csv
+          ls -lh data/sales_1m.csv
+
+      - name: Commit dataset
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f data/sales_1m.csv
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Add 1M-row sales dataset"
+          git push
