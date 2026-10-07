@@ -160,7 +160,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Big Data Analytics mit PySpark")
     parser.add_argument(
         "--input",
-        default="data/sales.csv",
+        default="data/sales_1m.csv",
         help="Pfad zur Eingabe-CSV",
     )
     parser.add_argument(
