@@ -2,6 +2,16 @@
 
 Dieses Projekt demonstriert eine skalierbare Big-Data-Analyse für E-Commerce-Verkaufsdaten mit **Apache Spark / PySpark**.
 
+## Datensatz
+
+Der große Testdatensatz ist bereits im Repository enthalten:
+
+```text
+data/sales_1m.csv
+```
+
+Er enthält **1.000.000 Datenzeilen** (plus Kopfzeile) und umfasst Bestellungen mit Kunden, Produkten, Kategorien, Ländern, Mengen, Preisen und Zeitstempeln.
+
 ## Ziel
 
 Die Pipeline verarbeitet große Mengen von Bestelldaten und beantwortet unter anderem:
@@ -17,10 +27,11 @@ Die Pipeline verarbeitet große Mengen von Bestelldaten und beantwortet unter an
 
 ```text
 mein-projekt/
+├── data/
+│   └── sales_1m.csv
 ├── src/
 │   ├── generate_data.py
 │   └── analytics.py
-├── data/
 ├── output/
 ├── requirements.txt
 ├── .gitignore
@@ -48,30 +59,32 @@ Unter Windows:
 pip install -r requirements.txt
 ```
 
-## 1. Testdaten erzeugen
+## Analyse starten
 
-100.000 Datensätze:
+Der enthaltene 1-Millionen-Datensatz ist jetzt die Standardeingabe:
 
 ```bash
-python src/generate_data.py --rows 100000 --output data/sales.csv
+spark-submit src/analytics.py
 ```
 
-Für einen größeren Big-Data-Test, zum Beispiel 1 Million Datensätze:
+Alternativ:
 
 ```bash
-python src/generate_data.py --rows 1000000 --output data/sales.csv
+python src/analytics.py
 ```
 
-## 2. Analyse starten
+Mit expliziten Pfaden:
 
 ```bash
-spark-submit src/analytics.py --input data/sales.csv --output output
+spark-submit src/analytics.py --input data/sales_1m.csv --output output
 ```
 
-Alternativ lokal:
+## Datensatz neu erzeugen
+
+Der Datensatz ist reproduzierbar. Mit folgendem Befehl können wieder genau 1.000.000 synthetische Zeilen erzeugt werden:
 
 ```bash
-python src/analytics.py --input data/sales.csv --output output
+python src/generate_data.py --rows 1000000 --output data/sales_1m.csv
 ```
 
 ## Analysen
@@ -104,7 +117,7 @@ output/
 
 ## Big-Data-Aspekte
 
-Das Projekt verwendet Spark DataFrames statt einer rein lokalen In-Memory-Verarbeitung. Dadurch kann dieselbe Logik lokal auf kleinen Testdaten oder verteilt auf einem Spark-Cluster mit wesentlich größeren Datenmengen ausgeführt werden.
+Das Projekt verwendet Spark DataFrames statt einer rein lokalen In-Memory-Verarbeitung. Dadurch kann dieselbe Logik lokal oder verteilt auf einem Spark-Cluster mit wesentlich größeren Datenmengen ausgeführt werden.
 
 Mögliche Erweiterungen:
 
