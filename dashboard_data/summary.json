@@ -1,0 +1,41 @@
+{
+  "data_quality": {
+    "input_rows": 1000000,
+    "valid_rows": 1000000,
+    "rejected_rows": 0,
+    "quality_rate_pct": 100.0
+  },
+  "kpis": {
+    "total_orders": 1000000,
+    "unique_customers": 50000,
+    "total_revenue": 849735398.79,
+    "average_order_revenue": 849.74
+  },
+  "anomalies": {
+    "method": "3-sigma",
+    "threshold": 4017.13,
+    "count": 17502
+  },
+  "leaders": {
+    "top_category": {
+      "name": "Electronics",
+      "revenue": 507625712.45
+    },
+    "top_country": {
+      "name": "France",
+      "revenue": 106769558.43
+    },
+    "top_product": {
+      "name": "Laptop",
+      "revenue": 230794570.2
+    },
+    "best_month": {
+      "month": "2024-05",
+      "revenue": 36663862.92
+    },
+    "worst_month": {
+      "month": "2025-02",
+      "revenue": 32078294.83
+    }
+  }
+}
